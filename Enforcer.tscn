@@ -1,0 +1,53 @@
+[gd_scene load_steps=5 format=3 uid="uid://6lavs7wsnkna"]
+
+[sub_resource type="GDScript" id="GDScript_5odyl"]
+script/source = "extends CharacterBody2D
+
+var speed = 200
+
+func _physics_process(delta):
+	velocity.x = speed
+	velocity.y += 980 * delta
+	move_and_slide()
+"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7qfm5"]
+size = Vector2(40, 40)
+
+[sub_resource type="GDScript" id="GDScript_33u1u"]
+script/source = "extends Area2D
+
+func _ready():
+	body_entered.connect(_on_body_entered)
+
+func _on_body_entered(body):
+	if body.name == \"Player\":
+		get_node(\"../../CanvasLayer/TimerLabel\").game_over()
+"
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_v10xp"]
+radius = 44.0
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Enforcer" type="CharacterBody2D" parent="."]
+position = Vector2(67, 15)
+script = SubResource("GDScript_5odyl")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Enforcer"]
+position = Vector2(0, 33)
+shape = SubResource("RectangleShape2D_7qfm5")
+
+[node name="ColorRect" type="ColorRect" parent="Enforcer"]
+offset_left = -20.0
+offset_top = 13.0
+offset_right = 20.0
+offset_bottom = 53.0
+color = Color(0.984314, 0, 0, 1)
+
+[node name="CatchZone" type="Area2D" parent="Enforcer"]
+script = SubResource("GDScript_33u1u")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Enforcer/CatchZone"]
+position = Vector2(-1, 30)
+shape = SubResource("CircleShape2D_v10xp")

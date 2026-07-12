@@ -1,0 +1,313 @@
+[gd_scene load_steps=22 format=3 uid="uid://by7cbsjejalrw"]
+
+[ext_resource type="Script" path="res://Camerap2D.gd" id="1_nhmxd"]
+[ext_resource type="Script" path="res://player.gd" id="1_s21wg"]
+[ext_resource type="Script" path="res://ScannerTrigger.gd" id="3_v5qd4"]
+[ext_resource type="Script" path="res://TimerLabel.gd" id="4_dxpqc"]
+[ext_resource type="Script" path="res://Turnstile.gd" id="5_w0q8b"]
+[ext_resource type="Script" path="res://InteractZone.gd" id="6_mid37"]
+[ext_resource type="Script" path="res://Train.gd" id="7_0vcf6"]
+[ext_resource type="Script" path="res://InteractZone2.gd" id="8_8bxk0"]
+[ext_resource type="Script" path="res://EnforcerTemplate.gd" id="9_lbj4v"]
+[ext_resource type="Script" path="res://GameOver.gd" id="10_axe4u"]
+[ext_resource type="Script" path="res://TickTimer.gd" id="11_ksl2u"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cnl2j"]
+size = Vector2(2267, 66)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4x6iw"]
+size = Vector2(320.5, 134.688)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_b3wex"]
+size = Vector2(23, 34)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5cse4"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_yejl5"]
+size = Vector2(20, 33.5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pir48"]
+size = Vector2(20, 98)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_q13i4"]
+radius = 45.0444
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_p2tsb"]
+size = Vector2(40, 66)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rweqe"]
+size = Vector2(28, 40)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_iii33"]
+radius = 44.2832
+
+[node name="frame5" type="Node2D"]
+
+[node name="Camera2D" type="Camera2D" parent="." node_paths=PackedStringArray("target")]
+scale = Vector2(1.01183, 1.025)
+zoom = Vector2(2, 2)
+position_smoothing_enabled = true
+script = ExtResource("1_nhmxd")
+target = NodePath("../Player")
+
+[node name="TrainPlatform" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TrainPlatform"]
+position = Vector2(61.5, 255)
+shape = SubResource("RectangleShape2D_cnl2j")
+
+[node name="ColorRect" type="ColorRect" parent="TrainPlatform"]
+offset_left = -1071.0
+offset_top = 222.0
+offset_right = 1195.0
+offset_bottom = 291.0
+color = Color(0.572549, 0.572549, 0.572549, 1)
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="TrainPlatform"]
+position = Vector2(-1217.75, 294.344)
+shape = SubResource("RectangleShape2D_4x6iw")
+
+[node name="Player" type="CharacterBody2D" parent="." groups=["Player"]]
+position = Vector2(-811, 181)
+script = ExtResource("1_s21wg")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
+position = Vector2(1, 25)
+shape = SubResource("RectangleShape2D_b3wex")
+
+[node name="ColorRect" type="ColorRect" parent="Player"]
+offset_left = -11.0
+offset_top = 8.0
+offset_right = 12.0
+offset_bottom = 42.0
+color = Color(0, 0.4, 0.882353, 1)
+
+[node name="ScannerTrigger" type="Area2D" parent="."]
+position = Vector2(-90, 195)
+script = ExtResource("3_v5qd4")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ScannerTrigger"]
+position = Vector2(0, 17)
+shape = SubResource("RectangleShape2D_5cse4")
+
+[node name="ColorRect" type="ColorRect" parent="ScannerTrigger"]
+offset_left = -10.0
+offset_top = 7.0
+offset_right = 10.0
+offset_bottom = 27.0
+color = Color(1, 0.270588, 0.243137, 1)
+
+[node name="Guard" type="StaticBody2D" parent="."]
+position = Vector2(28, 176)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Guard"]
+position = Vector2(0, 28.75)
+shape = SubResource("RectangleShape2D_yejl5")
+
+[node name="ColorRect" type="ColorRect" parent="Guard"]
+offset_left = -10.0
+offset_top = 12.0
+offset_right = 10.0
+offset_bottom = 45.0
+color = Color(0.384314, 0, 0.0392157, 1)
+
+[node name="GameoverTimer" type="Timer" parent="."]
+wait_time = 10.0
+one_shot = true
+
+[node name="Turnstile" type="StaticBody2D" parent="."]
+editor_description = "Турникет"
+script = ExtResource("5_w0q8b")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Turnstile"]
+position = Vector2(103, 172)
+shape = SubResource("RectangleShape2D_pir48")
+
+[node name="ColorRect" type="ColorRect" parent="Turnstile"]
+offset_left = 94.0
+offset_top = 123.0
+offset_right = 116.0
+offset_bottom = 221.0
+color = Color(0, 0.572549, 0, 1)
+
+[node name="InteractZone" type="Area2D" parent="Turnstile"]
+script = ExtResource("6_mid37")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Turnstile/InteractZone"]
+position = Vector2(98, 205)
+shape = SubResource("CircleShape2D_q13i4")
+
+[node name="HackHint" type="Label" parent="Turnstile"]
+offset_left = 86.0
+offset_top = 116.0
+offset_right = 114.0
+offset_bottom = 142.0
+text = "213"
+
+[node name="Train" type="Node2D" parent="."]
+position = Vector2(3, 3)
+script = ExtResource("7_0vcf6")
+
+[node name="ColorRect" type="ColorRect" parent="Train"]
+z_index = -1
+offset_left = 408.0
+offset_top = 99.0
+offset_right = 1169.0
+offset_bottom = 220.0
+color = Color(0.533333, 0.32549, 0.858824, 1)
+
+[node name="InteractZone2" type="Area2D" parent="Train"]
+script = ExtResource("8_8bxk0")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Train/InteractZone2"]
+position = Vector2(538, 187)
+shape = SubResource("RectangleShape2D_p2tsb")
+
+[node name="ColorRect" type="ColorRect" parent="Train/InteractZone2"]
+z_index = -1
+offset_left = 518.0
+offset_top = 154.0
+offset_right = 558.0
+offset_bottom = 220.0
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="GuardLabel" type="Label" parent="CanvasLayer"]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -111.5
+offset_top = -101.0
+offset_right = 111.5
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="HackLabel" type="Label" parent="CanvasLayer"]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -163.5
+offset_top = -109.0
+offset_right = 163.5
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="FailLabel" type="Label" parent="CanvasLayer"]
+z_index = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -124.0
+offset_top = -90.0
+offset_right = 140.0
+offset_bottom = 86.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="WinLabel" type="Label" parent="CanvasLayer"]
+z_index = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -112.0
+offset_top = -82.0
+offset_right = 105.0
+offset_bottom = 57.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="FadeRect" type="ColorRect" parent="CanvasLayer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -1539.0
+offset_top = -542.0
+offset_right = 1742.0
+offset_bottom = 600.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.970915, 0.949679)
+color = Color(0.0627451, 0.0627451, 0.0627451, 0)
+
+[node name="DexLabel" type="Label" parent="CanvasLayer"]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -178.0
+offset_top = -90.0
+offset_right = 184.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="TimerLabel" type="Label" parent="CanvasLayer"]
+process_mode = 4
+visible = false
+offset_right = 194.0
+offset_bottom = 169.0
+theme_override_font_sizes/font_size = 40
+text = "60"
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("4_dxpqc")
+
+[node name="TickTimer" type="Timer" parent="CanvasLayer"]
+script = ExtResource("11_ksl2u")
+
+[node name="TickLabel" type="Label" parent="CanvasLayer/TickTimer"]
+visible = false
+anchors_preset = -1
+anchor_right = 0.0458333
+anchor_bottom = 0.0546296
+offset_right = 121.0
+offset_bottom = 80.0
+scale = Vector2(1, 1.00613)
+theme_override_font_sizes/font_size = 100
+text = "60"
+horizontal_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="EnforcerTemplate" type="CharacterBody2D" parent="."]
+process_mode = 4
+visible = false
+z_index = 5
+position = Vector2(-900, 60)
+script = ExtResource("9_lbj4v")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EnforcerTemplate"]
+position = Vector2(0, 60)
+shape = SubResource("RectangleShape2D_rweqe")
+
+[node name="ColorRect" type="ColorRect" parent="EnforcerTemplate"]
+offset_left = -14.0
+offset_top = 40.0
+offset_right = 14.0
+offset_bottom = 80.0
+color = Color(1, 0.0901961, 0.0823529, 1)
+
+[node name="CatchZone" type="Area2D" parent="EnforcerTemplate"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EnforcerTemplate/CatchZone"]
+position = Vector2(0, 59)
+shape = SubResource("CircleShape2D_iii33")
+
+[node name="GameOver" type="Node2D" parent="."]
+script = ExtResource("10_axe4u")
+
+[connection signal="body_entered" from="ScannerTrigger" to="ScannerTrigger" method="_on_body_entered"]
+[connection signal="cutscene_ended" from="ScannerTrigger" to="Player" method="_on_scanner_trigger_cutscene_ended"]
+[connection signal="cutscene_started" from="ScannerTrigger" to="Player" method="_on_scanner_trigger_cutscene_started"]
+[connection signal="mouse_entered" from="ScannerTrigger" to="ScannerTrigger" method="mouse_1"]
+[connection signal="mouse_exited" from="ScannerTrigger" to="ScannerTrigger" method="mouse_2"]
+[connection signal="timeout" from="CanvasLayer/TickTimer" to="CanvasLayer/TickTimer" method="_on_timeout"]
